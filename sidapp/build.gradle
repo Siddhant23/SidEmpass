@@ -1,0 +1,66 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+ext {
+
+    //For bintray and jcenter distribution
+    bintrayRepo = 'sid-registration-form-empass'
+    bintrayName = 'com.sidapp'
+
+    libraryName = 'com.sidapp'
+    artifact = 'sidapp' //This artifact name should be the same with library module name
+
+    libraryDescription = 'Sample Assgn'
+
+    libraryVersion = '1.0'
+    publishedGroupId ='com.sidapp'
+    siteUrl= 'wwww.google.com'
+        developerId = 'siddhant23'
+        developerName = 'Siddhant Mehta'
+        developerEmail = 'mehtasiddhant23@gmail.com'
+    gitUrl = 'https://github.com/Siddhant23/SidEmpass.git'
+        organization = '' // if you push to organization's repository.
+    licenseName = 'The Apache Software License, Version 2.0'  //Example for license
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+
+}
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+         minSdkVersion 16
+        targetSdkVersion 28
+        versionName "1.0"
+        versionCode 1
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+   subprojects{
+       tasks.withType(Javadoc).all{enabled = false}
+   }
+
+}
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+
+
+}
+repositories {
+    mavenCentral()
+}
+
+if (project.rootProject.file('local.properties').exists()){
+    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+}
